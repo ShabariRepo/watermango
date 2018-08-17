@@ -29,9 +29,6 @@ namespace Watermango
 
 			//Console.WriteLine(configuration.GetConnectionString("Storage"));
 
-			//Thread eventThread = new Thread(ThreadMethod);
-			//eventThread.Start();
-
 			// prep the program and stage the plants list for operation
 			IPrepProgram _prep = new PrepProgram();
 			var allPlants = _prep.LoadedPlants(5);
