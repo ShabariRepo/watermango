@@ -44,7 +44,7 @@ namespace Watermango
 
 				// command palette
 				Console.WriteLine("\nHere are the list of commands you can use. Please type a command here!");
-				Console.WriteLine("\n1. Command: WATER ID   |  Desc: water a particular plant (i.e. WATER 1)\n2. Command: STATUS ID  |  Desc: returns the status plant (i.e. STATUS 1)\n3. Command: SHUTDOWN   |  Desc: Exit the app!");
+				Console.WriteLine("\n1. Command: WATER ID   |  Desc: water a particular plant (i.e. WATER 1)\n2. Command: STATUS ID  |  Desc: returns the status of the particular plant (i.e. STATUS 1)\n3. Command: SHUTDOWN   |  Desc: Exit the app!");
 				var command = Console.ReadLine();
 
 				// if it contains no spaces then enter message and retry
