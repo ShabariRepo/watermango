@@ -91,8 +91,6 @@ namespace Watermango
 							new Thread(() =>
 							{
 								Thread.CurrentThread.IsBackground = true;
-								/* run your code here */
-								//Console.WriteLine("\n\nHello, world from second Thread");
 
 								if(commandSet[0].Equals(WaterCommand))
 									Console.WriteLine("***Watering plants is strenuous and takes the system about 10 SECONDS to finish, you will be notified once finished.  Press ENTER to continue issuing commands.***");
