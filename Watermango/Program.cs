@@ -28,7 +28,7 @@ namespace Watermango
 			// prep the program and stage the plants list for operation
 			IPrepProgram _prep = new PrepProgram();
 			var allPlants = _prep.LoadedPlants(5);
-			PlantOperations _plantOperations = new PlantOperations(allPlants);
+			IPlantOperations _plantOperations = new PlantOperations(allPlants);
 
 			while (!isExit)
 			{
