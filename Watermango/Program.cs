@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Watermango
@@ -13,9 +14,12 @@ namespace Watermango
 		private const string StatusCommand = "STATUS";
 		private const string ShutdownCommand = "SHUTDOWN";
 
+		private static bool isExit = false;
+		private IPrepProgram _prep;
+		private IPlantOperations _plantOperations;
+
 		static void Main(string[] args)
         {
-			bool isExit = false;
 			//var builder = new ConfigurationBuilder()
 			//	.SetBasePath(Directory.GetCurrentDirectory())
 			//	.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
@@ -25,26 +29,18 @@ namespace Watermango
 
 			//Console.WriteLine(configuration.GetConnectionString("Storage"));
 
+			//Thread eventThread = new Thread(ThreadMethod);
+			//eventThread.Start();
+
 			// prep the program and stage the plants list for operation
 			IPrepProgram _prep = new PrepProgram();
 			var allPlants = _prep.LoadedPlants(5);
 			IPlantOperations _plantOperations = new PlantOperations(allPlants);
-
+			
 			while (!isExit)
 			{
-				var date = DateTime.Now;
-				Console.WriteLine($"\nHello, welcome to   ~~~~~~watermango~~~~~   where you can make some of our office plants very happy \nLoggin time: {date:d} at {date:t}!\n");
-				
-				// list all the plants IDs
-				Console.WriteLine("\nHere are the list of Plants we have in the system!\n");
-				foreach (var plant in allPlants)
-				{
-					Console.WriteLine($"Id: {plant.Id},  watered date: {plant.WaterDate},  # times watered: {plant.TimesWatered}");
-				}
-
-				// command palette
-				Console.WriteLine("\nHere are the list of commands you can use. Please type a command here!");
-				Console.WriteLine("\n1. Command: WATER ID   |  Desc: water a particular plant (i.e. WATER 1)\n2. Command: STATUS ID  |  Desc: returns the status of the particular plant (i.e. STATUS 1)\n3. Command: SHUTDOWN   |  Desc: Exit the app!");
+				_prep.PrepProgramInit();
+				_prep.ShowAllPlants(allPlants);
 				var command = Console.ReadLine();
 
 				// if it contains no spaces then enter message and retry
@@ -89,15 +85,26 @@ namespace Watermango
 							Console.WriteLine("\nId Value is not a numeric value or Command is not valid, please retry with a proper command and a number for plant Id from above Plant List!");
 						} else
 						{
-							Console.WriteLine("\nOk Cool working on it..!");
+							Console.WriteLine("Ok Cool working on it..!");
 
-							var validation = (commandSet[0].Equals(WaterCommand))
-								? _plantOperations.WaterPlant(plantId)
-								: (commandSet[0].Equals(StatusCommand))
-								? _plantOperations.StatusOfPlant(plantId)
-								: "\n\nInvalid Command, please try again.";
 
-							Console.WriteLine(validation);
+							new Thread(() =>
+							{
+								Thread.CurrentThread.IsBackground = true;
+								/* run your code here */
+								//Console.WriteLine("\n\nHello, world from second Thread");
+
+								if(commandSet[0].Equals(WaterCommand))
+									Console.WriteLine("***Watering plants is strenuous and takes the system about 10 SECONDS to finish, you will be notified once finished.  Press ENTER to continue issuing commands.***");
+
+								var validation = (commandSet[0].Equals(WaterCommand))
+									? _plantOperations.WaterPlant(plantId)
+									: (commandSet[0].Equals(StatusCommand))
+									? _plantOperations.StatusOfPlant(plantId)
+									: "\n\nInvalid Command, please try again.";
+
+								Console.WriteLine(validation);
+							}).Start();
 						}						
 					}
 				}

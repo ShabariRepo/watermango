@@ -31,21 +31,21 @@ namespace Watermango
 
 			if(plant == null)
 			{
-				returnMessage = $"No Plant with the given id: {PlantId}!";
+				returnMessage = $"\nNo Plant with the given id: {PlantId}!";
 			} else
 			{
 				var seconds = (DateTime.Now - plant.WaterDate).TotalSeconds;
-
+								
 				// water plant if > 30 seconds & update time and # watered
 				if (seconds < 30)
 				{
-					returnMessage = "Sorry the plant is not thirsty yet, please wait 30 seconds or more before watering the same plant.";
+					returnMessage = "\nSorry the plant is not thirsty yet, please wait 30 seconds or more before watering the same plant.";
 				} else
 				{
 					plant.TimesWatered++;
 					plant.WaterDate = DateTime.Now;
 
-					returnMessage = "Successfully watered plant.";					
+					returnMessage = $"\nSuccessfully watered plant {PlantId}.";					
 				}
 			}
 
@@ -61,7 +61,7 @@ namespace Watermango
 
 			if (plant == null)
 			{
-				returnMessage = $"No Plant with the given id: {PlantId}!";
+				returnMessage = $"\nNo Plant with the given id: {PlantId}!";
 			}
 			else
 			{
@@ -72,7 +72,7 @@ namespace Watermango
 				var minsMessage = mins < 1 ? "within the past" : mins.ToString();
 				var hoursMessage = hours < 1 ? "Within the past" : hours.ToString();
 
-				returnMessage = $"Plant {PlantId} has not been watered for {hoursMessage} hour(s) and {minsMessage} minute(s).  Its been watered {plant.TimesWatered} time(s) so far.";
+				returnMessage = $"\nPlant {PlantId} has not been watered for {hoursMessage} hour(s) and {minsMessage} minute(s).  Its been watered {plant.TimesWatered} time(s) so far.";
 			}
 
 			return returnMessage;
