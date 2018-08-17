@@ -52,7 +52,7 @@ namespace Watermango
 				{
 					// check if they want to shutdown ? set exit to true : invalid command
 					isExit = (command.Equals(ShutdownCommand)) ? true : false;
-					var outputMessage = (isExit) ? "\nShutting down, have a nice day \nPress Enter to Close console!": "\nCommand contains no spaces!";
+					var outputMessage = (isExit) ? "\nShutting down, have a nice day \nPress Enter to Close console!": "\nCommand is invalid, the phrase contains no spaces!";
 					
 					Console.WriteLine(outputMessage);
 				}
@@ -70,7 +70,7 @@ namespace Watermango
 					if (count > 1)
 					{
 						// invalid command
-						Console.WriteLine($"\nCommand contains too many spaces! {count} spaces found");
+						Console.WriteLine($"\nCommand is invalid, the phrase contains too many spaces! {count} spaces found");
 					}
 					else
 					{
